@@ -1,0 +1,46 @@
+/*
+ * vc4-kms-dsi-ili9881-lhr050h41-overlay.dts
+ * Configures the BananaPi LHR050H41 panel on DSI1.
+ * Untested with this specific panel, but working with similar ones.
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <&dsi1>;
+		__overlay__  {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "okay";
+            power-domains = <&power 18>;
+
+			port {
+				dsi_out: endpoint {
+					remote-endpoint = <&panel_in>;
+				};
+			};
+
+			dsi_panel: dsi_panel@0 {
+				reg = <0>;
+				compatible = "rocktech,jh057n00900";
+				// Add a regulator if you have one
+				//power-supply = <&reg_display>;
+				// Add a backlight controller  if you have one
+				//backlight = <&backlight>;
+                // Add reset pin
+                reset-gpios = <&gpio 13 1>; /* GPIO PIN 17, active Low */
+                vc4_dsi = <&dsi1>;
+
+				port {
+					panel_in: endpoint {
+						remote-endpoint = <&dsi_out>;
+					};
+				};
+			};
+		};
+	};
+};

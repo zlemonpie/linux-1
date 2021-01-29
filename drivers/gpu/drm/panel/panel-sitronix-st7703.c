@@ -376,13 +376,13 @@ static int st7703_enable(struct drm_panel *panel)
 	}
 
 	/* Panel is operational 120 msec after reset */
-	msleep(60);
+	msleep(120);
 
 	ret = mipi_dsi_dcs_set_display_on(dsi);
 	if (ret)
 		return ret;
 
-	dev_dbg(ctx->dev, "Panel init sequence done\n");
+	dev_info(ctx->dev, "Panel init sequence done\n");
 
 	return 0;
 }
@@ -427,7 +427,7 @@ static int st7703_prepare(struct drm_panel *panel)
 	if (ctx->prepared)
 		return 0;
 
-	dev_dbg(ctx->dev, "Resetting the panel\n");
+	dev_info(ctx->dev, "Resetting the panel\n");
 	ret = regulator_enable(ctx->vcc);
 	if (ret < 0) {
 		dev_err(ctx->dev, "Failed to enable vcc supply: %d\n", ret);
