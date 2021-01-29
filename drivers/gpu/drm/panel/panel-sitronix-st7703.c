@@ -544,6 +544,10 @@ static int st7703_probe(struct mipi_dsi_device *dsi)
 	dsi->format = ctx->desc->format;
 	dsi->lanes = ctx->desc->lanes;
 
+    dev_info(dev, "lanes: %d\n", dsi->lanes);
+    dev_info(dev, "format: %d\n", dsi->format);
+    dev_info(dev, "mode_flags: %lu\n", dsi->mode_flags);
+
 	ctx->vcc = devm_regulator_get(dev, "vcc");
 	if (IS_ERR(ctx->vcc)) {
 		ret = PTR_ERR(ctx->vcc);
