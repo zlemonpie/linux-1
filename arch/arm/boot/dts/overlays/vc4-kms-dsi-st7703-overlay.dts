@@ -32,7 +32,7 @@
 				// Add a backlight controller  if you have one
 				//backlight = <&backlight>;
                 // Add reset pin
-                reset-gpios = <&gpio 13 1>; /* GPIO PIN 17, active Low */
+                reset-gpios = <&gpio 13 1>; /* GPIO PIN 13, active Low */
                 vc4_dsi = <&dsi1>;
 
 				port {
