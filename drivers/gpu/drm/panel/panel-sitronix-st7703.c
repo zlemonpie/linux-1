@@ -355,6 +355,342 @@ static const struct st7703_panel_desc xbd599_desc = {
 	.init_sequence = xbd599_init_sequence,
 };
 
+
+static int atm0784_init_sequence(struct st7703 *ctx)
+{
+	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
+
+    dev_info(ctx->dev, "Initializing atm0784...");
+
+    dev_info(ctx->dev, "Set EXTC");
+    dsi_generic_write_seq(dsi, 0x04,0xB9); /// Set EXTC
+    dsi_generic_write_seq(dsi,0xF1);   //1
+    dsi_generic_write_seq(dsi,0x12);   //2
+    dsi_generic_write_seq(dsi,0x83);   //3
+
+    dev_info(ctx->dev, "Set RSO");
+    dsi_generic_write_seq(dsi,0x04,0xB2); /// Set RSO
+    dsi_generic_write_seq(dsi, 0xC8);   //1
+    dsi_generic_write_seq(dsi, 0x25);   //2
+    dsi_generic_write_seq(dsi, 0xF0);   //3
+
+    dev_info(ctx->dev, "Set RGB");
+    dsi_generic_write_seq(dsi,0x0B,0xB3); /// SET RGB
+    dsi_generic_write_seq(dsi, 0x10);   //1 VBP_RGB_GEN 
+    dsi_generic_write_seq(dsi, 0x10);   //2 VFP_RGB_GEN 
+    dsi_generic_write_seq(dsi, 0x28);   //3 DE_BP_RGB_GEN 
+    dsi_generic_write_seq(dsi, 0x28);   //4 DE_FP_RGB_GEN 
+    dsi_generic_write_seq(dsi, 0x03);   //5
+    dsi_generic_write_seq(dsi, 0xFF);   //6
+    dsi_generic_write_seq(dsi, 0x00);   //7
+    dsi_generic_write_seq(dsi, 0x00);   //8
+    dsi_generic_write_seq(dsi, 0x00);   //9
+    dsi_generic_write_seq(dsi, 0x00);   //10
+
+    dev_info(ctx->dev, "Set Panel Inversion");
+    dsi_generic_write_seq(dsi,0x02,0xB4); /// Set Panel Inversion
+    dsi_generic_write_seq(dsi, 0x80);   //1
+
+    dev_info(ctx->dev, "Set BGP");
+    dsi_generic_write_seq(dsi,0x03,0xB5); /// Set BGP
+    dsi_generic_write_seq(dsi, 0x0B);   //1 vref
+    dsi_generic_write_seq(dsi, 0x0B);   //2 nvref
+
+    dev_info(ctx->dev, "Set VCOM");
+    dsi_generic_write_seq(dsi,0x03,0xB6); /// Set VCOM
+    dsi_generic_write_seq(dsi, 0x50);   //1 F_VCOM
+    dsi_generic_write_seq(dsi, 0x50);   //2 B_VCOM
+
+    dev_info(ctx->dev, "Set ECP");
+    dsi_generic_write_seq(dsi,0x02,0xB8); ///Set ECP
+    dsi_generic_write_seq(dsi, 0x26);  //0x75 for 3 Power Mode,0x25 for Power IC Mode
+
+    dev_info(ctx->dev, "Set DSI");
+    dsi_generic_write_seq(dsi,0x1C,0xBA); /// Set DSI
+    dsi_generic_write_seq(dsi, 0x81);   //2
+    dsi_generic_write_seq(dsi, 0x05);   //3
+    dsi_generic_write_seq(dsi, 0xF9);   //4
+    dsi_generic_write_seq(dsi, 0x0E);   //5
+    dsi_generic_write_seq(dsi, 0x0E);   //6
+    dsi_generic_write_seq(dsi, 0x20);   //7
+    dsi_generic_write_seq(dsi, 0x00);   //8
+    dsi_generic_write_seq(dsi, 0x00);   //9
+    dsi_generic_write_seq(dsi, 0x00);   //10
+    dsi_generic_write_seq(dsi, 0x00);   //11
+    dsi_generic_write_seq(dsi, 0x00);   //12
+    dsi_generic_write_seq(dsi, 0x00);   //13
+    dsi_generic_write_seq(dsi, 0x00);   //14
+    dsi_generic_write_seq(dsi, 0x44);   //15
+    dsi_generic_write_seq(dsi, 0x25);   //16
+    dsi_generic_write_seq(dsi, 0x00);   //17
+    dsi_generic_write_seq(dsi, 0x90);   //18
+    dsi_generic_write_seq(dsi, 0x0A);   //19
+    dsi_generic_write_seq(dsi, 0x00);   //20
+    dsi_generic_write_seq(dsi, 0x00);   //21
+    dsi_generic_write_seq(dsi, 0x01);   //22
+    dsi_generic_write_seq(dsi, 0x4F);   //23
+    dsi_generic_write_seq(dsi, 0x01);   //24
+    dsi_generic_write_seq(dsi, 0x00);   //25
+    dsi_generic_write_seq(dsi, 0x00);   //26
+    dsi_generic_write_seq(dsi, 0x37);   //27
+
+    dev_info(ctx->dev, "Set VDC");
+    dsi_generic_write_seq(dsi,0x02,0xBC); /// Set VDC
+    dsi_generic_write_seq(dsi, 0x46);   //1 defaut=46   
+
+    dev_info(ctx->dev, "Set PCR");
+    dsi_generic_write_seq(dsi,0x04,0xBF); ///Set PCR
+    dsi_generic_write_seq(dsi, 0x02);  //   
+    dsi_generic_write_seq(dsi, 0x11);
+    dsi_generic_write_seq(dsi, 0x00);
+
+
+    dev_info(ctx->dev, "Set SCR");
+    dsi_generic_write_seq(dsi,0x0A,0xC0); /// Set SCR
+    dsi_generic_write_seq(dsi, 0x73);   //1  
+    dsi_generic_write_seq(dsi, 0x73);   //2  
+    dsi_generic_write_seq(dsi, 0x50);   //3
+    dsi_generic_write_seq(dsi, 0x50);   //4
+    dsi_generic_write_seq(dsi, 0x00);   //5
+    dsi_generic_write_seq(dsi, 0x00);   //6
+    dsi_generic_write_seq(dsi, 0x08);   //7
+    dsi_generic_write_seq(dsi, 0x70);   //8  
+    dsi_generic_write_seq(dsi, 0x00);   //9
+
+    dev_info(ctx->dev, "Set POWER");
+    dsi_generic_write_seq(dsi,0x0D,0xC1); /// Set POWER	
+    dsi_generic_write_seq(dsi, 0x25);   //1 VBTHS VBTLS 	
+    dsi_generic_write_seq(dsi, 0x00);	//2 E3
+    dsi_generic_write_seq(dsi, 0x32);   //3 VSPR	
+    dsi_generic_write_seq(dsi, 0x32);   //4 VSNR	
+    dsi_generic_write_seq(dsi, 0x99);   //5 VSP VSN	
+    dsi_generic_write_seq(dsi, 0xE4);   //6 APS	
+    dsi_generic_write_seq(dsi, 0xFF);   //7 VGH1 VGL1	
+    dsi_generic_write_seq(dsi, 0xFF);   //8 VGH1 VGL1	
+    dsi_generic_write_seq(dsi, 0xEE);   //9 VGH2 VGL2	
+    dsi_generic_write_seq(dsi, 0xEE);   //10 VGH2 VGL2	
+    dsi_generic_write_seq(dsi, 0x77);   //11 VGH3 VGL3	
+    dsi_generic_write_seq(dsi, 0x77);   //12 VGH3 VGL3
+
+
+    dev_info(ctx->dev, "Set Panel");
+    dsi_generic_write_seq(dsi,0x02,0xCC); /// Set Panel
+    dsi_generic_write_seq(dsi, 0x0B);   //1 Forward:0x0B , Backward:0x07
+
+    dev_info(ctx->dev, "Set Gamma2.5");
+    dsi_generic_write_seq(dsi,0x23,0xE0); /// Set Gamma2.5
+    dsi_generic_write_seq(dsi, 0x00);  //1
+    dsi_generic_write_seq(dsi, 0x0D);  //2
+    dsi_generic_write_seq(dsi, 0x14);  //3
+    dsi_generic_write_seq(dsi, 0x2C);  //4
+    dsi_generic_write_seq(dsi, 0x32);  //5
+    dsi_generic_write_seq(dsi, 0x3F);  //6
+    dsi_generic_write_seq(dsi, 0x47);  //7
+    dsi_generic_write_seq(dsi, 0x3C);  //8
+    dsi_generic_write_seq(dsi, 0x07);  //9
+    dsi_generic_write_seq(dsi, 0x0E);  //10
+    dsi_generic_write_seq(dsi, 0x10);  //11
+    dsi_generic_write_seq(dsi, 0x13);  //12
+    dsi_generic_write_seq(dsi, 0x15);  //13
+    dsi_generic_write_seq(dsi, 0x13);  //14
+    dsi_generic_write_seq(dsi, 0x14);  //15
+    dsi_generic_write_seq(dsi, 0x0F);  //16
+    dsi_generic_write_seq(dsi, 0x17);  //17
+    dsi_generic_write_seq(dsi, 0x00);  //1
+    dsi_generic_write_seq(dsi, 0x0D);  //2
+    dsi_generic_write_seq(dsi, 0x14);  //3
+    dsi_generic_write_seq(dsi, 0x2C);  //4
+    dsi_generic_write_seq(dsi, 0x32);  //5
+    dsi_generic_write_seq(dsi, 0x3F);  //6
+    dsi_generic_write_seq(dsi, 0x47);  //7
+    dsi_generic_write_seq(dsi, 0x3C);  //8
+    dsi_generic_write_seq(dsi, 0x07);  //9
+    dsi_generic_write_seq(dsi, 0x0E);  //10
+    dsi_generic_write_seq(dsi, 0x10);  //11
+    dsi_generic_write_seq(dsi, 0x13);  //12
+    dsi_generic_write_seq(dsi, 0x15);  //13
+    dsi_generic_write_seq(dsi, 0x13);  //14
+    dsi_generic_write_seq(dsi, 0x14);  //15
+    dsi_generic_write_seq(dsi, 0x0F);  //16
+    dsi_generic_write_seq(dsi, 0x17);  //17
+
+
+    dev_info(ctx->dev, "Set EQ");
+    dsi_generic_write_seq(dsi,0x0F,0xE3); /// Set EQ
+    dsi_generic_write_seq(dsi, 0x07);   //1  PNOEQ                        
+    dsi_generic_write_seq(dsi, 0x07);   //2  NNOEQ                        
+    dsi_generic_write_seq(dsi, 0x0B);   //3  PEQGND                       
+    dsi_generic_write_seq(dsi, 0x0B);   //4  NEQGND                       
+    dsi_generic_write_seq(dsi, 0x03);   //5  PEQVCI                       
+    dsi_generic_write_seq(dsi, 0x03);   //6  NEQVCI                       
+    dsi_generic_write_seq(dsi, 0x00);   //7  PEQVCI1                      
+    dsi_generic_write_seq(dsi, 0x00);   //8  NEQVCI1                      
+    dsi_generic_write_seq(dsi, 0x00);   //9  VCOM_PULLGND_OFF             
+    dsi_generic_write_seq(dsi, 0x00);   //10 VCOM_PULLGND_OFF             
+    dsi_generic_write_seq(dsi, 0xFF);   //11 VCOM_IDLE_ON                 
+    dsi_generic_write_seq(dsi, 0x80);   //12                              
+    dsi_generic_write_seq(dsi, 0xC0);   //13 defaut C0 ESD detect function
+    dsi_generic_write_seq(dsi, 0x10);   //14 SLPOTP                      
+
+
+    dev_info(ctx->dev, "Set GIP");
+    dsi_generic_write_seq(dsi,0x40,0xE9); /// Set GIP
+    dsi_generic_write_seq(dsi, 0xC8);  //1  PANSEL      //
+    dsi_generic_write_seq(dsi, 0x10);  //2  SHR_0[11:8] //
+    dsi_generic_write_seq(dsi, 0x0A);  //3  SHR_0[7:0]  // 
+    dsi_generic_write_seq(dsi, 0x10);  //4  SHR_1[11:8]
+    dsi_generic_write_seq(dsi, 0x0E);  //5  SHR_1[7:0]  
+    dsi_generic_write_seq(dsi, 0x80);  //6  SPON[7:0]   
+    dsi_generic_write_seq(dsi, 0x81);  //7  SPOFF[7:0]  
+    dsi_generic_write_seq(dsi, 0x12);  //8  SHR0_1[3:0], SHR0_2[3:0]
+    dsi_generic_write_seq(dsi, 0x31);  //9  SHR0_3[3:0], SHR1_1[3:0]
+    dsi_generic_write_seq(dsi, 0x23);  //10  SHR1_2[3:0], SHR1_3[3:0]
+    dsi_generic_write_seq(dsi, 0x4F);  //11  SHP[3:0], SCP[3:0]  
+    dsi_generic_write_seq(dsi, 0x86);  //12  CHR[7:0]  //
+    dsi_generic_write_seq(dsi, 0x80);  //13  CON[7:0]  
+    dsi_generic_write_seq(dsi, 0x38);  //14  COFF[7:0]  
+    dsi_generic_write_seq(dsi, 0x47);  //15  CHP[3:0], CCP[3:0]  
+    dsi_generic_write_seq(dsi, 0x08);  //16  USER_GIP_GATE[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //17  CGTS_L[21:16]
+    dsi_generic_write_seq(dsi, 0x0E);  //18  CGTS_L[15:8]
+    dsi_generic_write_seq(dsi, 0x0C);  //19  CGTS_L[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //20  CGTS_INV_L[21:16]
+    dsi_generic_write_seq(dsi, 0x02);  //21  CGTS_INV_L[15:8]
+    dsi_generic_write_seq(dsi, 0x00);  //22  CGTS_INV_L[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //23  CGTS_R[21:16]
+    dsi_generic_write_seq(dsi, 0x0E);  //24  CGTS_R[15:8]
+    dsi_generic_write_seq(dsi, 0x0C);  //25  CGTS_R[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //26  CGTS_INV_R[21:16]
+    dsi_generic_write_seq(dsi, 0x02);  //27  CGTS_INV_R[15:8]
+    dsi_generic_write_seq(dsi, 0x00);  //28  CGTS_INV_R[7:0]
+
+    dsi_generic_write_seq(dsi, 0x8F);  //29  COS1_L[3:0],  COS2_L[3:0] ,//   VSD  ,  VDS 
+    dsi_generic_write_seq(dsi, 0x94);  //30  COS3_L[3:0],  COS4_L[3:0] ,//   GCL  ,  STV0 
+    dsi_generic_write_seq(dsi, 0x46);  //31  COS5_L[3:0],  COS6_L[3:0] ,//   CLK1 ,  CLK3
+    dsi_generic_write_seq(dsi, 0x02);  //32  COS7_L[3:0],  COS8_L[3:0] ,//   CLK5 ,  CLK7
+    dsi_generic_write_seq(dsi, 0x8A);  //33  COS9_L[3:0],  COS10_L[3:0],//        ,  GCH
+    dsi_generic_write_seq(dsi, 0x02);  //34  COS11_L[3:0], COS12_L[3:0],//   STV1 ,  STV3
+    dsi_generic_write_seq(dsi, 0x88);  //35  COS13_L[3:0], COS14_L[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //36  COS15_L[3:0], COS16_L[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //37  COS17_L[3:0], COS18_L[3:0],//      
+    dsi_generic_write_seq(dsi, 0x88);  //38  COS19_L[3:0], COS20_L[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //39  COS21_L[3:0], COS22_L[3:0],//
+
+    dsi_generic_write_seq(dsi, 0x8F);  //40  COS1_R[3:0],  COS2_R[3:0] ,//   VSD  ,  VDS
+    dsi_generic_write_seq(dsi, 0x94);  //41  COS3_R[3:0],  COS4_R[3:0] ,//   GCL  ,  STV0  
+    dsi_generic_write_seq(dsi, 0x57);  //42  COS5_R[3:0],  COS6_R[3:0] ,//   CLK0 ,  CLK2 
+    dsi_generic_write_seq(dsi, 0x13);  //43  COS7_R[3:0],  COS8_R[3:0] ,//   CLK4 ,  CLK6
+    dsi_generic_write_seq(dsi, 0x8A);  //44  COS9_R[3:0],  COS10_R[3:0],//        ,  GCH
+    dsi_generic_write_seq(dsi, 0x13);  //45  COS11_R[3:0], COS12_R[3:0],//   STV2 ,  STV4
+    dsi_generic_write_seq(dsi, 0x88);  //46  COS13_R[3:0], COS14_R[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //47  COS15_R[3:0], COS16_R[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //48  COS17_R[3:0], COS18_R[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //49  COS19_R[3:0], COS20_R[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //50  COS21_R[3:0], COS22_R[3:0],// 
+
+    dsi_generic_write_seq(dsi, 0x00);  //51  TCONOPTION
+    dsi_generic_write_seq(dsi, 0x00);  //52  OPTION
+    dsi_generic_write_seq(dsi, 0x00);  //53  OTPION
+    dsi_generic_write_seq(dsi, 0x01);  //54  OPTION
+    dsi_generic_write_seq(dsi, 0x00);  //55  CHR2
+    dsi_generic_write_seq(dsi, 0x80);  //56  CON2
+    dsi_generic_write_seq(dsi, 0x38);  //57  COFF2
+    dsi_generic_write_seq(dsi, 0x00);  //58  CHP2,CCP2
+    dsi_generic_write_seq(dsi, 0x00);  //59  CKS 21 20 19 18 17 16
+    dsi_generic_write_seq(dsi, 0x00);  //60  CKS 15 14 13 12 11 10 9 8
+    dsi_generic_write_seq(dsi, 0x00);  //61  CKS 7~0
+    dsi_generic_write_seq(dsi, 0x00);  //62  COFF[7:6]   CON[5:4]    SPOFF[3:2]    SPON[1:0]
+    dsi_generic_write_seq(dsi, 0x00);  //63  COFF2[7:6]    CON2[5:4]   - - - -
+
+    dev_info(ctx->dev, "Set GIP2");
+    dsi_generic_write_seq(dsi,0x3E,0xEA); /// Set GIP2
+    dsi_generic_write_seq(dsi, 0x00);  //1  ys2_sel[1:0]
+    dsi_generic_write_seq(dsi, 0x1A);  //2  user_gip_gate1[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //3  ck_all_on_width1[5:0]
+    dsi_generic_write_seq(dsi, 0x00);  //4  ck_all_on_width2[5:0]
+    dsi_generic_write_seq(dsi, 0x00);  //5  ck_all_on_width3[5:0]
+    dsi_generic_write_seq(dsi, 0x00);  //6  ys_flag_period[7:0]
+    dsi_generic_write_seq(dsi, 0x01);  //7  ys_2
+    dsi_generic_write_seq(dsi, 0x0C);  //8  user_gip_gate1_2[7:0]
+    dsi_generic_write_seq(dsi, 0x41);  //9  ck_all_on_width1_2[5:0]
+    dsi_generic_write_seq(dsi, 0x01);  //10 ck_all_on_width2_2[5:0]
+    dsi_generic_write_seq(dsi, 0x02);  //11 ck_all_on_width3_2[5:0]
+    dsi_generic_write_seq(dsi, 0x00);  //12 ys_flag_period_2[7:0]
+    dsi_generic_write_seq(dsi, 0xF8);  //13  COS1_L[3:0],  COS2_L[3:0] ,//   VSD  ,  VDS 
+    dsi_generic_write_seq(dsi, 0x94);  //14  COS3_L[3:0],  COS4_L[3:0] ,//   GCL  ,  STV0 
+    dsi_generic_write_seq(dsi, 0x31);  //15  COS5_L[3:0],  COS6_L[3:0] ,//   CLK1 ,  CLK3
+    dsi_generic_write_seq(dsi, 0x75);  //16  COS7_L[3:0],  COS8_L[3:0] ,//   CLK5 ,  CLK7
+    dsi_generic_write_seq(dsi, 0x8A);  //17  COS9_L[3:0],  COS10_L[3:0],//        ,  GCH
+    dsi_generic_write_seq(dsi, 0x31);  //18  COS11_L[3:0], COS12_L[3:0],//   STV1 ,  STV3
+    dsi_generic_write_seq(dsi, 0x88);  //19  COS13_L[3:0], COS14_L[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //20  COS15_L[3:0], COS16_L[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //21  COS17_L[3:0], COS18_L[3:0],//      
+    dsi_generic_write_seq(dsi, 0x88);  //22  COS19_L[3:0], COS20_L[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //23  COS21_L[3:0], COS22_L[3:0],//
+    dsi_generic_write_seq(dsi, 0xF8);  //24  COS1_R[3:0],  COS2_R[3:0] ,//   VSD  ,  VDS
+    dsi_generic_write_seq(dsi, 0x94);  //25  COS3_R[3:0],  COS4_R[3:0] ,//   GCL  ,  STV0  
+    dsi_generic_write_seq(dsi, 0x20);  //26  COS5_R[3:0],  COS6_R[3:0] ,//   CLK0 ,  CLK2
+    dsi_generic_write_seq(dsi, 0x64);  //27  COS7_R[3:0],  COS8_R[3:0] ,//   CLK4 ,  CLK6
+    dsi_generic_write_seq(dsi, 0x8A);  //28  COS9_R[3:0],  COS10_R[3:0],//        ,  GCH
+    dsi_generic_write_seq(dsi, 0x20);  //29  COS11_R[3:0], COS12_R[3:0],//   STV2 ,  STV4
+    dsi_generic_write_seq(dsi, 0x88);  //30  COS13_R[3:0], COS14_R[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //31  COS15_R[3:0], COS16_R[3:0],//
+    dsi_generic_write_seq(dsi, 0x88);  //32  COS17_R[3:0], COS18_R[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //33  COS19_R[3:0], COS20_R[3:0],// 
+    dsi_generic_write_seq(dsi, 0x88);  //34  COS21_R[3:0], COS22_R[3:0],//
+    dsi_generic_write_seq(dsi, 0x23);  //35 EQOPT , EQ_SEL
+    dsi_generic_write_seq(dsi, 0x00);  //36 EQ_DELAY[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //37 EQ_DELAY_HSYNC [3:0]
+    dsi_generic_write_seq(dsi, 0x01);  //38 HSYNC_TO_CL1_CNT9[8]
+    dsi_generic_write_seq(dsi, 0x28);  //39 HSYNC_TO_CL1_CNT9[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //40 HIZ_L
+    dsi_generic_write_seq(dsi, 0x00);  //41 HIZ_R
+    dsi_generic_write_seq(dsi, 0x00);  //42 CKS_GS[21:16]
+    dsi_generic_write_seq(dsi, 0x00);  //43 CKS_GS[15:8]
+    dsi_generic_write_seq(dsi, 0x00);  //44 CKS_GS[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //45 CK_MSB_EN[21:16]
+    dsi_generic_write_seq(dsi, 0x00);  //46 CK_MSB_EN[15:8]
+    dsi_generic_write_seq(dsi, 0x00);  //47 CK_MSB_EN[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //48 CK_MSB_EN_GS[21:16]
+    dsi_generic_write_seq(dsi, 0x00);  //49 CK_MSB_EN_GS[15:8]
+    dsi_generic_write_seq(dsi, 0x00);  //50 CK_MSB_EN_GS[7:0]
+    dsi_generic_write_seq(dsi, 0x05);  //51  SHR2[11:8]
+    dsi_generic_write_seq(dsi, 0x0B);  //52  SHR2[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //53  SHR2_1[3:0] SHR2_2
+    dsi_generic_write_seq(dsi, 0x00);  //54  SHR2_3[3:0]
+    dsi_generic_write_seq(dsi, 0x40);  //55 SHP1[3:0]
+    dsi_generic_write_seq(dsi, 0x80);  //56 SPON1[7:0]
+    dsi_generic_write_seq(dsi, 0x81);  //57 SPOFF1[7:0]
+    dsi_generic_write_seq(dsi, 0x40);  //58 SHP2[3:0]
+    dsi_generic_write_seq(dsi, 0x80);  //59 SPON2[7:0]
+    dsi_generic_write_seq(dsi, 0x81);  //60 SPOFF2[7:0]
+    dsi_generic_write_seq(dsi, 0x00);  //61 SPOFF2[9:8]/SPON2[9:8]/SPOFF1[9:8]/SPON1[9:8]
+	return 0;
+}
+
+static const struct drm_display_mode atm0784_mode = {
+	.hdisplay    = 540,
+	.hsync_start = 540 + 35,
+	.hsync_end   = 540 + 35 + 35,
+	.htotal	     = 540 + 35 + 35 + 35,
+	.vdisplay    = 1280,
+	.vsync_start = 1280 + 16,
+	.vsync_end   = 1280 + 16 + 4,
+	.vtotal	     = 1280 + 16 + 4 + 21,
+	.clock	     = 25561,
+	.flags	     = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
+	.width_mm    = 60,
+	.height_mm   = 190,
+};
+
+static const struct st7703_panel_desc atm0784_desc = {
+	.mode = &atm0784_mode,
+	.lanes = 2,
+	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE,
+	.format = MIPI_DSI_FMT_RGB888,
+	.init_sequence = atm0784_init_sequence,
+};
+
 static int st7703_enable(struct drm_panel *panel)
 {
 	struct st7703 *ctx = panel_to_st7703(panel);
@@ -376,11 +712,13 @@ static int st7703_enable(struct drm_panel *panel)
 	}
 
 	/* Panel is operational 120 msec after reset */
-	msleep(120);
+	msleep(250);
 
 	ret = mipi_dsi_dcs_set_display_on(dsi);
 	if (ret)
 		return ret;
+
+	msleep(50);
 
 	dev_info(ctx->dev, "Panel init sequence done\n");
 
@@ -623,6 +961,7 @@ static int st7703_remove(struct mipi_dsi_device *dsi)
 static const struct of_device_id st7703_of_match[] = {
 	{ .compatible = "rocktech,jh057n00900", .data = &jh057n00900_panel_desc },
 	{ .compatible = "xingbangda,xbd599", .data = &xbd599_desc },
+	{ .compatible = "azdisplays,atm0784", .data = &atm0784_desc },
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, st7703_of_match);
